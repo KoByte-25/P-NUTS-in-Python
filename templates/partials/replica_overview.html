@@ -1,0 +1,28 @@
+<h2>Replicas of {{ db_name }}</h2>
+
+{% for replica in replicas %}
+    <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+        <h3>Database: {{ replica.replica_name }}</h3>
+        <p><strong>Tables:</strong> {{ replica.table_count }}</p>
+
+        {% if replica.tables %}
+            <ul>
+                {% for table in replica.tables %}
+                    <li>
+                        <a href="#"
+                           onclick="showReplicaTable(
+                               '{{ db_name }}',
+                               '{{ replica.replica_name }}',
+                               '{{ table.name }}'
+                           )">
+                            {{ table.name }}
+                        </a>
+                        ({{ table.record_count }} records)
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No tables.</p>
+        {% endif %}
+    </div>
+{% endfor %}

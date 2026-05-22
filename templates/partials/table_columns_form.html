@@ -1,0 +1,26 @@
+<h3>Create Table: {{ table_name }}</h3>
+
+<form method="POST" action="/database/{{ db_name }}/create_table" class="tab_col_form">
+    <input type="hidden" name="table_name" value="{{ table_name }}">
+
+    {% for i in range(num_columns) %}
+    <div class="form-row">
+        <input type="text" name="col_name_{{ i }}" placeholder="Attribute name" required>
+
+        <select name="col_type_{{ i }}">
+            <option value="int">INT</option>
+            <option value="str">STRING</option>
+            <option value="float">FLOAT</option>
+        </select>
+        <!-- Hidden input for PK enforced type -->
+        <input type="hidden" name="col_type_{{ i }}" class="pk-hidden" value="">
+
+        <label class="checkbox-label">
+            <input type="checkbox" name="pk_{{ i }}">
+            Primary Key
+        </label>
+    </div>
+    {% endfor %}
+
+    <button type="submit">Save Table</button>
+</form>

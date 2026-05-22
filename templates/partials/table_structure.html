@@ -1,0 +1,20 @@
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Attributes</th>
+        <th>Type</th>
+        <th>Primary Key</th>
+    </tr>
+
+    {% for col in structure %}
+    <tr>
+        <td>{{ col.name }}</td>
+        <td>{{ col.type }}</td>
+        <td>{% if col.is_pk %}YES{% else %}NO{% endif %}</td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<button onclick="showUpdateTableForm('{{ db_name }}','{{ table_name }}')">
+    Update Table
+</button>
+

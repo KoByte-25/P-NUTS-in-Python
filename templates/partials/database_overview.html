@@ -1,0 +1,16 @@
+<h2>Database: {{ master_name }}</h2>
+
+{% if tables %}
+    <h3>Tables: {{ tables|length }}</h3>
+    <ul>
+        {% for table in tables %}
+            <li> 
+                <a href="#" onclick="viewMasterTable('{{ db_name }}','{{ table }}')">
+                    {{ table }} 
+                </a>
+                ({{ cluster.master_nodes[db_name].database.tables[table].records|length }} records)</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tables in this database yet.</p>
+{% endif %}

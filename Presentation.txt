@@ -1,0 +1,110 @@
+What is P’NUTS?
+
+P’NUTS (Platform for Networked Unified Table Storage) is a distributed, schema-based key-value database system developed by Yahoo! to support large-scale web applications.
+
+It was designed to handle:
+
+Massive user data
+
+High read/write traffic
+
+Multiple geographically distributed data centers
+
+Flexible consistency (not full ACID like MySQL)
+
+What Type of Database Is It?
+
+P’NUTS is:
+
+✅ Distributed database
+
+✅ Schema-based key-value store
+
+✅ Supports structured tables (unlike pure NoSQL KV stores)
+
+Core Characteristics of P’NUTS
+1️⃣ Schema-Based Tables
+
+Unlike Dynamo-style systems, P’NUTS enforces a schema.
+
+Example:
+Each record has:
+
+A primary key
+
+Defined columns
+
+Typed attributes
+
+This makes it more structured than pure key-value systems.
+
+2️⃣ Record-Level Master
+
+Each record has:
+
+One designated master replica
+
+All writes go to that master
+
+Replicas receive updates asynchronously
+
+This avoids write conflicts.
+
+3️⃣ Timeline Consistency (Very Important)
+
+This is P’NUTS’ most famous feature.
+
+Timeline consistency guarantees:
+
+Reads will always see writes in the same order they were committed for a given record.
+
+Example:
+Write 1 → age = 20
+Write 2 → age = 25
+A client will never see 25 and then later see 20.
+
+This is stronger than eventual consistency but weaker than full ACID.
+
+4️⃣ Asynchronous Replication
+
+Writes go to master
+
+Master replicates updates to other replicas
+
+Replication is async (non-blocking)
+
+Improves performance and scalability
+
+| System | Type            | Consistency   |
+| ------ | --------------- | ------------- |
+| MySQL  | Relational      | Strong (ACID) |
+| Dynamo | Key-value       | Eventual      |
+| P’NUTS | Schema-based KV | Timeline      |
+
+Project Scope
+1️⃣ Schema-Based Tables
+
+Create table with schema
+
+Primary key enforcement
+
+Type checking
+
+2️⃣ Key-Value Operations
+
+put()
+
+get()
+
+update()
+
+delete()
+
+3️⃣ Record-Level Master
+
+One master node
+
+Multiple replicas
+
+4️⃣ Asynchronous Replication (Simulated)
+5️⃣ Timeline Consistency Demonstration

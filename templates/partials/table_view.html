@@ -1,0 +1,39 @@
+<h2>Table: {{ table_name }}</h2>
+
+<button onclick="showRecords('{{ db_name }}', '{{ table_name }}')">Records</button>
+<button onclick="showStructure('{{ db_name }}', '{{ table_name }}')">Structure</button>
+
+<hr>
+
+<div id="table-content">
+
+    <!-- Default: show records -->
+    {% if records %}
+        <table border="1" cellpadding="5">
+            <tr>
+                {% for col in structure %}
+                    <th>{{ col.name }}</th>
+                {% endfor %}
+                    <th> Operations </th>
+            </tr>
+
+            {% for record in records %}
+                <tr>
+                    {% for col in structure %}
+                        <td>{{ record[col.name] }}</td>
+                    {% endfor %}
+                    <td> 
+                        <button onclick="openUpdateRecordModal('{{ db_name }}', '{{ table_name }}', '{{ record[table.primary_key] }}')"> Update </button>
+                        <button onclick="deleteRecord('{{ db_name }}','{{ table_name }}','{{ record[table.primary_key] }}')">Delete</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No records in this table.</p>
+    {% endif %}
+
+</div>
+<button onclick="openInsertModal('{{ db_name }}','{{ table_name }}')">
+    Insert Record
+</button>

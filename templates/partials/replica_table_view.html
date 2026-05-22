@@ -1,0 +1,50 @@
+<h2>Database: {{ replica_name }}</h2>
+<h3>Table: {{ table_name }}</h3>
+
+<hr>
+
+<h4>Schema</h4>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Column</th>
+        <th>Type</th>
+        <th>Primary Key</th>
+    </tr>
+    {% for col_name, col_type in table.schema.items() %}
+    <tr>
+        <td>{{ col_name }}</td>
+        <td>{{ col_type.__name__ }}</td>
+        <td>
+            {% if col_name == table.primary_key %}
+                YES
+            {% else %}
+                NO
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<h4>Records (Replica)</h4>
+
+{% if table.records %}
+<table border="1" cellpadding="5">
+    <tr>
+        {% for col in table.schema.keys() %}
+            <th>{{ col }}</th>
+        {% endfor %}
+    </tr>
+
+    {% for record in records %}
+    <tr>
+        {% for col in table.schema.keys() %}
+            <td>{{ record[col] }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No records found.</p>
+{% endif %}

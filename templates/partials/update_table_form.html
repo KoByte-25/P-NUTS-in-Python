@@ -1,0 +1,35 @@
+<div>
+    <h3>Update Table: {{ table_name }}</h3>
+
+    <!-- Show PK column for reference (disabled) -->
+    <div class="form-row">
+        <input type="text" value="{{ table.primary_key }}" disabled>
+        <select disabled>
+            <option value="{{ table.schema[table.primary_key].__name__ }}">
+                {{ table.schema[table.primary_key].__name__ }}
+            </option>
+        </select>
+        <span style="margin-left:10px; font-weight:bold;">Primary Key (cannot be changed)</span>
+    </div>
+    <hr>
+
+    <div id="update-table-form">
+        {% for col_name, col_type in table.schema.items() %}
+            {% if col_name != table.primary_key %}
+                <div class="form-row">
+                    <input type="text" name="col_name_{{ loop.index0 }}" value="{{ col_name }}" required>
+                    <select name="col_type_{{ loop.index0 }}">
+                        <option value="int" {% if col_type==int %}selected{% endif %}>int</option>
+                        <option value="float" {% if col_type==float %}selected{% endif %}>float</option>
+                        <option value="str" {% if col_type==str %}selected{% endif %}>str</option>
+                    </select>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <br>
+        <button type="button" onclick="submitUpdateTableForm('{{ db_name }}','{{ table_name }}')">
+            Update Table
+        </button>
+    </div>
+</div>
